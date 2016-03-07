@@ -5,11 +5,11 @@ Created on 2016/03/02
 '''
 import threading
 
-import pygame, time
+import pygame
 from pygameui.colors import white_color
 
 from pygame.constants import RLEACCEL, SRCALPHA
-import resource
+import resource  # @UnresolvedImport
 
 
 class ProccessSpinner():
@@ -39,21 +39,22 @@ class ProccessSpinner():
         
     def run(self, slot, title=''):
         self.title = title
-        t = threading.Thread(target=self.spinnering)
+        t = threading.Thread(target=self._spinnering)
         t.start()
         slot()
         self.spinnering_flag = False
         t.join()
-        self.clear()
+        self._clear()
         
-    def spinnering(self):
-        self.draw_title(self.screen)
+    def _spinnering(self):
+        self._draw_title(self.screen)
+        clock = pygame.time.Clock()
         while self.spinnering_flag:
-            time.sleep(0.05)
+            clock.tick(20)
             self.current_frame = (self.current_frame + 1) % self.frame_count
-            self.draw(self.screen, self.background)
+            self._draw(self.screen, self.background)
             
-    def draw_title(self, screen):
+    def _draw_title(self, screen):
             pygame.font.init() # Just in case 
             titleFont = pygame.font.SysFont('Courier New', 24, bold=True) 
             text = titleFont.render(self.title, 1, white_color)
@@ -64,7 +65,8 @@ class ProccessSpinner():
             offsety = blockoffy - textpos.height - self.size / 2 - 20
             screen.blit(text, (offsetx,offsety))
             pygame.display.update()
-    def draw(self, screen, background):
+            
+    def _draw(self, screen, background):
         center_x = self.size /2
         center_y = self.size /2
         frame_pattern = self.current_frame / 8
@@ -90,9 +92,9 @@ class ProccessSpinner():
          
         screen.blit(layer, (screen_center_x + frame_x, screen_center_y + frame_y), (frame_x, frame_y, self.size /2, self.size /2))
 
-        pygame.display.update()
+        pygame.display.update((screen_center_x, screen_center_y, self.size, self.size))
         
-    def clear(self):    
+    def _clear(self):    
         ''' Put the screen back to before we started '''
         self.screen.blit(self.screenCopy,(0,0))
         pygame.display.update()

@@ -17,6 +17,10 @@ SELECT_TEXT_COLOR_KEY = 'select_text_color'
 PADDING_KEY = 'padding'
 FONT_KEY = 'font'
 
+OBJECT_RECTANGLE_CLASS = 'ObjectRectangle'
+LABEL_CLASS = 'Label'
+BUTTON_CLASS = 'Button'
+
 class Theme(object):
     '''
     classdocs
@@ -31,11 +35,12 @@ class Theme(object):
         self.styles.setdefault(class_name, {})
         self.styles[class_name][key] = value
         
-    def get_dict(self, obj, base_name='ObjectRectangle'):
+    def get_dict(self, obj, base_name=OBJECT_RECTANGLE_CLASS):
         classes  = []
         klass = obj.__class__
         while True:
             classes.append(klass)
+            print klass.__name__
             if klass.__name__ == base_name:
                 break
             klass = klass.__bases__[0]
@@ -47,7 +52,7 @@ class Theme(object):
             except KeyError:
                 style = {}
                 
-            re_style = dict(chain(style.iteritems(), style.iteritems()))
+            re_style = dict(chain(style.iteritems(), re_style.iteritems()))
             
         return re_style
         
@@ -55,33 +60,56 @@ default_theme = Theme()
 current = None
 
 def init_default_theme():
-    default_theme.set(class_name='ObjectRectangle',
+    default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BACKGROUND_COLOR_KEY,
                       value=black_color)
-    default_theme.set(class_name='ObjectRectangle',
+    default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=SELECT_BACKGROUND_COLOR_KEY,
-                      value=gray_color)
-    default_theme.set(class_name='ObjectRectangle',
+                      value=None)
+    default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BORDER_WIDTHS_KEY,
-                      value=1)
-    default_theme.set(class_name='ObjectRectangle',
+                      value=None)
+    default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BORDER_COLOR_KEY,
                       value=None)
-    default_theme.set(class_name='Label',
+    
+    default_theme.set(class_name=LABEL_CLASS,
                     key=TEXT_COLOR_KEY,
                     value=white_color)
-    default_theme.set(class_name='Label',
+    default_theme.set(class_name=LABEL_CLASS,
                     key=SELECT_TEXT_COLOR_KEY,
                     value=dark_gray_color)
-    default_theme.set(class_name='Label',
+    default_theme.set(class_name=LABEL_CLASS,
                     key=PADDING_KEY,
                     value=(6, 6))
-    default_theme.set(class_name='Label',
+    default_theme.set(class_name=LABEL_CLASS,
                     key=BORDER_WIDTHS_KEY,
                     value=None)
-    default_theme.set(class_name='Label',
+    default_theme.set(class_name=LABEL_CLASS,
                     key=FONT_KEY,
                     value=pygame.font.SysFont('Courier New', 24))
+    
+    default_theme.set(class_name=BUTTON_CLASS,
+                      key=BACKGROUND_COLOR_KEY,
+                      value=black_color)
+    default_theme.set(class_name=BUTTON_CLASS,
+                      key=SELECT_BACKGROUND_COLOR_KEY,
+                      value=gray_color)
+    default_theme.set(class_name=BUTTON_CLASS,
+                      key=BORDER_WIDTHS_KEY,
+                      value=1)
+    default_theme.set(class_name=BUTTON_CLASS,
+                      key=BORDER_COLOR_KEY,
+                      value=white_color)
+    default_theme.set(class_name=BUTTON_CLASS,
+                    key=TEXT_COLOR_KEY,
+                    value=white_color)
+    default_theme.set(class_name=BUTTON_CLASS,
+                    key=SELECT_TEXT_COLOR_KEY,
+                    value=dark_gray_color)
+    default_theme.set(class_name=BUTTON_CLASS,
+                    key=FONT_KEY,
+                    value=pygame.font.SysFont('Courier New', 24, bold=True))
 
 def use_theme(theme):
     """Make the given theme current.

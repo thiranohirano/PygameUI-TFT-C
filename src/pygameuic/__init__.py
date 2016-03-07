@@ -2,11 +2,12 @@ import pygame
 
 from object_rectangle import *
 from label import *
+from button import *
 from callback import *
 from virtualKeyboard import *
 from proccess_spinner import *
 from scene import Scene  # @UnresolvedImport
-import scene
+import scene  # @UnresolvedImport
 import window  # @UnresolvedImport
 import theme  # @Reimport @UnresolvedImport
 
@@ -24,6 +25,7 @@ class SceneManager(object):
     def use_scene(self, index):
         scene.pop()
         scene.push(self.scenes[index])
+        scene.current.__class__.__class__.__name__
         
 scene_manager = SceneManager()
 
@@ -48,6 +50,7 @@ def run():
     clock = pygame.time.Clock()
     
     while True:
-        clock.tick(60)
+        clock.tick(20)
         scene.current.run()
+        scene.current.displayUpdate()
                         

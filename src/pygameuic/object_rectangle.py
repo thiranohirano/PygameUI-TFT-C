@@ -42,9 +42,9 @@ class ObjectRectangle(object):
         for key, val in style.iteritems():
             kvc.set_value_for_keypath(self, key, val)
         
-    def draw(self, screen):
+    def _draw(self, screen):
         if not self.dirty: return False
-        
+        print 'dirty'
         if self.selected:
             if self.select_background_color <> None:
                 self.surface.fill(self.select_background_color)
@@ -59,6 +59,10 @@ class ObjectRectangle(object):
         return True
     
     def draw_blit(self, screen):
-        self.draw(screen)
-        screen.blit(self.surface, (self.rect.x, self.rect.y))
+        if self._draw(screen):
+            screen.blit(self.surface, (self.rect.x, self.rect.y))
+            print 'blit'
+            return True
+        
+        return False
         

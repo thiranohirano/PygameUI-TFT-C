@@ -4,6 +4,7 @@ from pygame.constants import MOUSEBUTTONDOWN, MOUSEBUTTONUP
 import window  # @UnresolvedImport
 from proccess_spinner import ProccessSpinner  # @UnresolvedImport
 from virtualKeyboard import VirtualKeyboard  # @UnresolvedImport
+from pygameuic.colors import black_color
 
 
 stack = []
@@ -14,7 +15,7 @@ def push(scene):
     global current
     stack.append(scene)
     current = scene
-
+    current.all_dirty_child()
 
 def pop():
     global current
@@ -24,6 +25,7 @@ def pop():
 
     if len(stack) > 0:
         current = stack[-1]
+        
 
 class Scene(object):
     """A view that takes up the entire window content area."""
@@ -39,17 +41,17 @@ class Scene(object):
         if events <> None:
             for e in events:
                 if e.type == MOUSEBUTTONDOWN:
-                    self.unselectall()
+                    self._unselectall()
                     pos = pygame.mouse.get_pos()
-                    self.selectatmouse(pos)
-                    hit_object = self.hit_object(pos)
+                    self._selectatmouse(pos)
+                    hit_object = self._hit_object(pos)
                     if hit_object is not None:
                         hit_object.mouse_down(pos)
                     self.event_mousedown(pos)
                 if e.type == MOUSEBUTTONUP:
-                    self.unselectall()
+                    self._unselectall()
                     pos = pygame.mouse.get_pos()
-                    hit_object = self.hit_object(pos)
+                    hit_object = self._hit_object(pos)
                     if hit_object is not None:
                         hit_object.mouse_up(pos)
                     self.event_mouseup(pos)
@@ -87,32 +89,40 @@ class Scene(object):
                 break;
             
     def all_dirty_child(self):
+        self.window_surface.fill(black_color)
         for child in self.children:
             child.dirty = True
         
-    def draw(self):
+    def _draw(self):
 #         print 'draw'
+        draw_flag = False
         for child in self.children:
-            child.draw_blit(self.surface)
+            if child.draw_blit(self.surface):
+                draw_flag = True
+                print 'child blit'
+                
+        return draw_flag
     
     def displayUpdate(self):
-        self.draw()
-        self.window_surface.blit(self.surface,(0,0))
-        pygame.display.update()
+        flag = self._draw()
+        if flag == True:
+            self.window_surface.blit(self.surface,(0,0))
+            pygame.display.update()
+            print 'update'
         
-    def unselectall(self):
+    def _unselectall(self):
         for child in self.children:
             if child.selected:
                 child.selected = False
                 child.dirty = True
                 
-    def selectatmouse(self, pos):
+    def _selectatmouse(self, pos):
         for child in self.children:
             if child.rect.collidepoint(pos) and child.enabled:
                 child.selected = True
                 child.dirty = True
                 
-    def hit_object(self, pos):
+    def _hit_object(self, pos):
         for child in self.children:
             if child.rect.collidepoint(pos) and child.enabled:
                 return child

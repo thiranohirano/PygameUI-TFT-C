@@ -4,7 +4,7 @@ Created on 2016/03/04
 @author: hirano
 '''
 import re
-import object_rectangle
+import object_rectangle  # @UnresolvedImport
 import pygame
 from pygameuic.colors import white_color, dark_gray_color
 
@@ -36,6 +36,15 @@ class Label(object_rectangle.ObjectRectangle):
         self._text = text
         self.enabled = False
         
+    @property
+    def text(self):
+        return self._text
+    
+    @text.setter
+    def text(self, text):
+        self._text = text
+        self.dirty = True
+    
     def render(self):
         """Force (re)draw the text to cached surfaces.
         """
@@ -123,8 +132,8 @@ class Label(object_rectangle.ObjectRectangle):
             x = self.rect.w - 1 - self.padding[0] - w
         return x
     
-    def draw(self, screen):
-        if not object_rectangle.ObjectRectangle.draw(self, screen) or not self._text:
+    def _draw(self, screen):
+        if not object_rectangle.ObjectRectangle._draw(self, screen) or not self._text:
             return False
         
         self.render()
