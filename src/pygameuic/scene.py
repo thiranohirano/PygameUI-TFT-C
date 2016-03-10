@@ -33,7 +33,7 @@ class Scene(object):
     def __init__(self):
         self.window_surface = None
         self.surface = pygame.Surface(window.rect.size, pygame.SRCALPHA, 32)
-        self.items = []
+        self.children = []
 
     def run(self):
         events = pygame.event.get() 
@@ -73,29 +73,29 @@ class Scene(object):
         vk = VirtualKeyboard(self.window_surface)
         return vk.run(text)
         
-    def add_item(self, item):
+    def add_child(self, item):
         assert item is not None
-        self.rm_item(item)
-        self.items.append(item)
+        self.rm_child(item)
+        self.children.append(item)
         item.dirty = True
         
-    def rm_item(self, child):
-        for index, ch in enumerate(self.items):
+    def rm_child(self, child):
+        for index, ch in enumerate(self.children):
             if ch == child:
 #                 ch.orphaned()
-                del self.items[index]
+                del self.children[index]
                 self.all_dirty_item()
                 break;
             
     def all_dirty_item(self):
         self.window_surface.fill(black_color)
-        for child in self.items:
+        for child in self.children:
             child.dirty = True
         
     def _draw(self):
 #         print 'draw'
         draw_flag = False
-        for child in self.items:
+        for child in self.children:
             if child.draw_blit(self.surface):
                 draw_flag = True
                 
@@ -109,19 +109,19 @@ class Scene(object):
             print 'update'
         
     def _unselectall(self):
-        for child in self.items:
+        for child in self.children:
             if child.selected:
                 child.selected = False
                 child.dirty = True
                 
     def _selectatmouse(self, pos):
-        for child in self.items:
+        for child in self.children:
             if child.rect.collidepoint(pos) and child.enabled:
                 child.selected = True
                 child.dirty = True
                 
     def _hit_object(self, pos):
-        for child in self.items:
+        for child in self.children:
             if child.rect.collidepoint(pos) and child.enabled:
                 return child
         return None

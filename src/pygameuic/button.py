@@ -3,7 +3,7 @@ Created on 2016/03/07
 
 @author: hirano
 '''
-import label
+import label  # @UnresolvedImport
 import callback  # @UnresolvedImport
 
 class Button(label.Label):

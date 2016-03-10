@@ -42,7 +42,7 @@ class Theme(object):
         klass = obj.__class__
         while True:
             classes.append(klass)
-            print klass.__name__
+#             print klass.__name__
             if klass.__name__ == base_name:
                 break
             klass = klass.__bases__[0]

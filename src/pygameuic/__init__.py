@@ -46,11 +46,11 @@ def use_scene(_index):
     global scene_manager
     scene_manager.use_scene(_index)
     
-def col_rect(col, row, col_span, row_span):
-    padding = 6
-    one_col = window.rect.w // 12
-    one_row = window.rect.h // 8
-    return pygame.Rect(col * one_col + padding, row * one_row + padding, col_span * one_col - padding * 2, row_span * one_row - padding * 2)
+def col_rect(col, row, col_span, row_span, margin=5):
+    padding = 5
+    one_col = (window.rect.w - margin * 2)  // 12
+    one_row = (window.rect.h - margin * 2) // 8
+    return pygame.Rect(col * one_col + padding + margin, row * one_row + padding + margin, col_span * one_col - padding * 2, row_span * one_row - padding * 2)
     
 def run():
     assert len(scene.stack) > 0

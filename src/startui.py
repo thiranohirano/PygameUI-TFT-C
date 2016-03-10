@@ -16,30 +16,30 @@ class StartScene(ui.Scene):
         self.main_frame.enabled = False
         self.main_frame.border_color = mycolors.belize_hole
         self.main_frame.border_widths = 9
-        self.add_item(self.main_frame)
+        self.add_child(self.main_frame)
         
         self.obj_r = ui.Button(ui.col_rect(0, 1, 3, 2), 'Proc')
         self.obj_r.on_clicked.connect(self.hoge)
-        self.add_item(self.obj_r)
+        self.add_child(self.obj_r)
  
         self.obj_r2 = ui.Button(ui.col_rect(3, 1, 3, 2), 'vkey')
         self.obj_r2.on_clicked.connect(self.hoge2)
-        self.add_item(self.obj_r2)
+        self.add_child(self.obj_r2)
          
         self.obj_r3 = ui.Button(ui.col_rect(6, 1, 3, 2), 'test')
         self.obj_r3.on_clicked.connect(self.hoge3)
-        self.add_item(self.obj_r3)
+        self.add_child(self.obj_r3)
         
         self.obj_r4 = ui.Button(ui.col_rect(9, 1, 3, 2), 'Button')
         self.obj_r4.on_clicked.connect(self.hoge4)
-        self.add_item(self.obj_r4)
+        self.add_child(self.obj_r4)
          
         self.label1 = ui.Label(ui.Rect(10, 230, 100, 30), 'hoge')
-        self.add_item(self.label1)
+        self.add_child(self.label1)
         
         self.stringlistview1 = ui.StringListView(ui.col_rect(6, 4, 6, 3), [])
         self.stringlistview1.on_selected.connect(self.listview_select)
-        self.add_item(self.stringlistview1)
+        self.add_child(self.stringlistview1)
         
     def hoge(self, obj):
         self.show_proccess_spinner(self.search_proccess, 'Scanning for WiFi networks...')
@@ -62,4 +62,4 @@ class StartScene(ui.Scene):
         print 'hoge'
         time.sleep(3)
         print 'hoge'
-        self.add_item(self.obj_r3)
+        self.add_child(self.obj_r3)

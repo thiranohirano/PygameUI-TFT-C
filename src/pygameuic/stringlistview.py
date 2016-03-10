@@ -8,6 +8,7 @@ import object_rectangle  # @UnresolvedImport
 import callback  # @UnresolvedImport
 import label
 from pygame.rect import Rect
+from pygameuic import window
 
 class StringListView(object_rectangle.ObjectRectangle):
     '''
@@ -35,7 +36,7 @@ class StringListView(object_rectangle.ObjectRectangle):
         self._string_items = new_items
         x = 0
         y = 0
-        w, h = self.rect.w, 40
+        w, h = self.rect.w, window.rect.h // 8
         for item in self._string_items:
             string_list_item = StringListItem(Rect(x, y, w, h), item)
             self.add_item(string_list_item)
