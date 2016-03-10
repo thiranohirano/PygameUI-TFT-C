@@ -17,7 +17,7 @@ class PifiUI(ui.Scene):
         
         btn = ui.Button(ui.Rect(10, 10, 100, 30), 'back')
         btn.on_clicked.connect(self.back)
-        self.add_child(btn)
+        self.add_item(btn)
         
     def back(self, btn):
         ui.use_scene(0)

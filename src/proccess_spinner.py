@@ -5,18 +5,18 @@ Created on 2016/03/02
 '''
 import threading
 
-import pygame
+import pygame, time
 from pygameui.colors import white_color
 
 from pygame.constants import RLEACCEL, SRCALPHA
-import resource  # @UnresolvedImport
 
 
 class ProccessSpinner():
     '''
     classdocs
     '''
-    def __init__(self, screen):
+    def __init__(self, screen, title=''):
+        self.title = title
         self.size = 100
         self.current_frame = 0
         self.frame_count = 32
@@ -35,38 +35,35 @@ class ProccessSpinner():
         # blit background to screen
         self.screen.blit(self.background,(0,0))
         
-        self.image = resource.get_image("spinner_all")
+        self.image = pygame.image.load("spinner_all.png").convert_alpha()
         
-    def run(self, slot, title=''):
-        self.title = title
-        t = threading.Thread(target=self._spinnering)
+    def run(self, slot):
+        t = threading.Thread(target=self.spinnering)
         t.start()
         slot()
         self.spinnering_flag = False
         t.join()
-        self._clear()
+        self.clear()
         
-    def _spinnering(self):
-        self._draw_title(self.screen)
-        clock = pygame.time.Clock()
+    def spinnering(self):
+        self.draw_title(self.screen)
         while self.spinnering_flag:
-            clock.tick(15)
+            time.sleep(0.05)
             self.current_frame = (self.current_frame + 1) % self.frame_count
-            self._draw(self.screen, self.background)
+            self.draw(self.screen, self.background)
             
-    def _draw_title(self, screen):
-        pygame.font.init() # Just in case 
-        titleFont = pygame.font.SysFont('Courier New', 24, bold=True) 
-        text = titleFont.render(self.title, 1, white_color)
-        textpos = text.get_rect()
-        blockoffx = (self.w / 2)
-        blockoffy = (self.h / 2)
-        offsetx = blockoffx - (textpos.width / 2)
-        offsety = blockoffy - textpos.height - self.size / 2 - 20
-        screen.blit(text, (offsetx,offsety))
-        pygame.display.update()
-            
-    def _draw(self, screen, background):
+    def draw_title(self, screen):
+            pygame.font.init() # Just in case 
+            titleFont = pygame.font.SysFont('Courier New', 24, bold=True) 
+            text = titleFont.render(self.title, 1, white_color)
+            textpos = text.get_rect()
+            blockoffx = (self.w / 2)
+            blockoffy = (self.h / 2)
+            offsetx = blockoffx - (textpos.width / 2)
+            offsety = blockoffy - textpos.height - self.size / 2 - 20
+            screen.blit(text, (offsetx,offsety))
+            pygame.display.update()
+    def draw(self, screen, background):
         center_x = self.size /2
         center_y = self.size /2
         frame_pattern = self.current_frame / 8
@@ -92,9 +89,9 @@ class ProccessSpinner():
          
         screen.blit(layer, (screen_center_x + frame_x, screen_center_y + frame_y), (frame_x, frame_y, self.size /2, self.size /2))
 
-        pygame.display.update((screen_center_x, screen_center_y, self.size, self.size))
+        pygame.display.update()
         
-    def _clear(self):    
+    def clear(self):    
         ''' Put the screen back to before we started '''
         self.screen.blit(self.screenCopy,(0,0))
         pygame.display.update()

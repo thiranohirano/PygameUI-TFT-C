@@ -1,7 +1,7 @@
 from pygameuic import *  # @UnusedWildImport
-from pygameuic.theme import BORDER_WIDTHS_KEY, BORDER_COLOR_KEY, BUTTON_CLASS, BACKGROUND_COLOR_KEY, SELECT_BACKGROUND_COLOR_KEY 
+from pygameuic.theme import *  # @UnusedWildImport
 import mycolors
-from pygameuic.colors import black_color
+from pygameuic.colors import *  # @UnusedWildImport
 
 def set_theme():
     theme.current.set(class_name=BUTTON_CLASS,
@@ -16,3 +16,13 @@ def set_theme():
     theme.current.set(class_name=BUTTON_CLASS,
                       key= BORDER_COLOR_KEY,
                       value=mycolors.belize_hole)
+    
+    theme.current.set(class_name=STRING_LIST_VIEW_CLASS,
+                      key=BORDER_COLOR_KEY,
+                      value=mycolors.belize_hole)
+    theme.current.set(class_name=STRING_LIST_VIEW_CLASS,
+                      key=BORDER_WIDTHS_KEY,
+                      value=3)
+    theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
+                      key=SELECT_BACKGROUND_COLOR_KEY,
+                      value=mycolors.peter_river)

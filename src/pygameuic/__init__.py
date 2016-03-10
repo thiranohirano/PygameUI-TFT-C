@@ -3,6 +3,7 @@ import pygame
 from object_rectangle import *
 from label import *
 from button import *
+from stringlistview import *
 from callback import *
 from virtualKeyboard import *
 from proccess_spinner import *
@@ -44,6 +45,12 @@ def append_scene(_scene):
 def use_scene(_index):
     global scene_manager
     scene_manager.use_scene(_index)
+    
+def col_rect(col, row, col_span, row_span):
+    padding = 6
+    one_col = window.rect.w // 12
+    one_row = window.rect.h // 8
+    return pygame.Rect(col * one_col + padding, row * one_row + padding, col_span * one_col - padding * 2, row_span * one_row - padding * 2)
     
 def run():
     assert len(scene.stack) > 0

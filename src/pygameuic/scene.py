@@ -15,7 +15,7 @@ def push(scene):
     global current
     stack.append(scene)
     current = scene
-    current.all_dirty_child()
+    current.all_dirty_item()
 
 def pop():
     global current
@@ -33,10 +33,9 @@ class Scene(object):
     def __init__(self):
         self.window_surface = None
         self.surface = pygame.Surface(window.rect.size, pygame.SRCALPHA, 32)
-        self.children = []
+        self.items = []
 
     def run(self):
-#         print 'run()'
         events = pygame.event.get() 
         if events <> None:
             for e in events:
@@ -74,32 +73,31 @@ class Scene(object):
         vk = VirtualKeyboard(self.window_surface)
         return vk.run(text)
         
-    def add_child(self, child):
-        assert child is not None
-        self.rm_child(child)
-        self.children.append(child)
-        child.dirty = True
+    def add_item(self, item):
+        assert item is not None
+        self.rm_item(item)
+        self.items.append(item)
+        item.dirty = True
         
-    def rm_child(self, child):
-        for index, ch in enumerate(self.children):
+    def rm_item(self, child):
+        for index, ch in enumerate(self.items):
             if ch == child:
 #                 ch.orphaned()
-                del self.children[index]
-                self.all_dirty_child()
+                del self.items[index]
+                self.all_dirty_item()
                 break;
             
-    def all_dirty_child(self):
+    def all_dirty_item(self):
         self.window_surface.fill(black_color)
-        for child in self.children:
+        for child in self.items:
             child.dirty = True
         
     def _draw(self):
 #         print 'draw'
         draw_flag = False
-        for child in self.children:
+        for child in self.items:
             if child.draw_blit(self.surface):
                 draw_flag = True
-                print 'child blit'
                 
         return draw_flag
     
@@ -111,19 +109,19 @@ class Scene(object):
             print 'update'
         
     def _unselectall(self):
-        for child in self.children:
+        for child in self.items:
             if child.selected:
                 child.selected = False
                 child.dirty = True
                 
     def _selectatmouse(self, pos):
-        for child in self.children:
+        for child in self.items:
             if child.rect.collidepoint(pos) and child.enabled:
                 child.selected = True
                 child.dirty = True
                 
     def _hit_object(self, pos):
-        for child in self.children:
+        for child in self.items:
             if child.rect.collidepoint(pos) and child.enabled:
                 return child
         return None

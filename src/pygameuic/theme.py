@@ -20,6 +20,8 @@ FONT_KEY = 'font'
 OBJECT_RECTANGLE_CLASS = 'ObjectRectangle'
 LABEL_CLASS = 'Label'
 BUTTON_CLASS = 'Button'
+STRING_LIST_VIEW_CLASS = 'StringListView'
+STRING_LIST_ITEM_CLASS = 'StringListItem'
 
 class Theme(object):
     '''
@@ -65,7 +67,7 @@ def init_default_theme():
                       value=black_color)
     default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=SELECT_BACKGROUND_COLOR_KEY,
-                      value=None)
+                      value=gray_color)
     default_theme.set(class_name=OBJECT_RECTANGLE_CLASS,
                       key=BORDER_WIDTHS_KEY,
                       value=None)
@@ -110,6 +112,23 @@ def init_default_theme():
     default_theme.set(class_name=BUTTON_CLASS,
                     key=FONT_KEY,
                     value=pygame.font.SysFont('Courier New', 24, bold=True))
+    
+    default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
+                      key=BACKGROUND_COLOR_KEY,
+                      value=dark_gray_color)
+    default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
+                      key=SELECT_BACKGROUND_COLOR_KEY,
+                      value=dark_gray_color)
+    default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
+                      key=BORDER_WIDTHS_KEY,
+                      value=1)
+    default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
+                      key=BORDER_COLOR_KEY,
+                      value=white_color)
+    
+    default_theme.set(class_name=STRING_LIST_ITEM_CLASS,
+                      key=FONT_KEY,
+                      value=pygame.font.SysFont('Courier New', 24, bold=True))
 
 def use_theme(theme):
     """Make the given theme current.
