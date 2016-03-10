@@ -22,7 +22,7 @@ class StringListView(object_rectangle.ObjectRectangle):
         self.string_items = items
         self.selected_index = None
         self.on_selected = callback.Signal()
-        self.items_surface = pygame.Surface((self.rect.w - self.border_widths * 2, self.rect.h- self.border_widths * 2)).convert()
+        self.items_surface = pygame.Surface((self.rect.w - self.border_widths * 2, self.rect.h - self.border_widths * 2)).convert()
         
     @property
     def string_items(self):
@@ -30,15 +30,14 @@ class StringListView(object_rectangle.ObjectRectangle):
     
     @string_items.setter
     def string_items(self, new_items):
-        for item in self.items:
-            self.rm_item(item)
+        del self.items[:]
             
         self._string_items = new_items
         x = 0
         y = 0
-        w, h = self.rect.w,  40
+        w, h = self.rect.w, 40
         for item in self._string_items:
-            string_list_item = StringListItem(Rect(x, y, w,h), item)
+            string_list_item = StringListItem(Rect(x, y, w, h), item)
             self.add_item(string_list_item)
             y += h
         self.dirty = True
@@ -72,7 +71,7 @@ class StringListView(object_rectangle.ObjectRectangle):
             item.selected = True
             self.on_selected(self, item, index)
             
-    def mouse_down(self,  point):
+    def mouse_down(self, point):
         for index, item in enumerate(self.items):
             item_rect = Rect(self.rect.x, self.rect.y + item.rect.y, item.rect.w, item.rect.h)
             if item_rect.collidepoint(point):
@@ -88,7 +87,7 @@ class StringListView(object_rectangle.ObjectRectangle):
         for item in self.items:
             item.draw_blit(self.items_surface)
             
-        self.surface.blit(self.items_surface,(self.border_widths, self.border_widths))
+        self.surface.blit(self.items_surface, (self.border_widths, self.border_widths))
         return True
     
 class StringListItem(label.Label):

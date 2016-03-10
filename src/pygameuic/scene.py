@@ -104,7 +104,7 @@ class Scene(object):
     def displayUpdate(self):
         flag = self._draw()
         if flag == True:
-            self.window_surface.blit(self.surface,(0,0))
+            self.window_surface.blit(self.surface, (0, 0))
             pygame.display.update()
             print 'update'
         

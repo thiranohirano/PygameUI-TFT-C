@@ -3,7 +3,7 @@ Created on 2016/03/04
 
 @author: hirano
 '''
-from pygameuic.colors import black_color, white_color, dark_gray_color,\
+from pygameuic.colors import black_color, white_color, dark_gray_color, \
     gray_color
 from itertools import chain
 import pygame
@@ -38,7 +38,7 @@ class Theme(object):
         self.styles[class_name][key] = value
         
     def get_dict(self, obj, base_name=OBJECT_RECTANGLE_CLASS):
-        classes  = []
+        classes = []
         klass = obj.__class__
         while True:
             classes.append(klass)

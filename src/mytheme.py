@@ -14,7 +14,7 @@ def set_theme():
                       key=BORDER_WIDTHS_KEY,
                       value=5)
     theme.current.set(class_name=BUTTON_CLASS,
-                      key= BORDER_COLOR_KEY,
+                      key=BORDER_COLOR_KEY,
                       value=mycolors.belize_hole)
     
     theme.current.set(class_name=STRING_LIST_VIEW_CLASS,

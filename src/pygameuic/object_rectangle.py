@@ -52,7 +52,7 @@ class ObjectRectangle(object):
                 self.surface.fill(self.background_color)
         
         if self.border_color <> None and self.border_widths <> None:
-            pygame.draw.rect(self.surface, self.border_color, (0,0 ,self.rect.w,self.rect.h), self.border_widths)
+            pygame.draw.rect(self.surface, self.border_color, (0, 0 , self.rect.w, self.rect.h), self.border_widths)
             
         self.dirty = False
         return True

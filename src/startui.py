@@ -12,17 +12,17 @@ class StartScene(ui.Scene):
 
     def __init__(self):
         ui.Scene.__init__(self)
-        self.main_frame = ui.ObjectRectangle(ui.window.rect)#ui.ObjectRectangle(ui.window.rect, mycolors.midnight_blue, None, 10, mycolors.belize_hole)
+        self.main_frame = ui.ObjectRectangle(ui.window.rect)  # ui.ObjectRectangle(ui.window.rect, mycolors.midnight_blue, None, 10, mycolors.belize_hole)
         self.main_frame.enabled = False
         self.main_frame.border_color = mycolors.belize_hole
         self.main_frame.border_widths = 9
         self.add_item(self.main_frame)
         
-        self.obj_r = ui.Button(ui.col_rect(0,1, 3,2), 'Proc')
+        self.obj_r = ui.Button(ui.col_rect(0, 1, 3, 2), 'Proc')
         self.obj_r.on_clicked.connect(self.hoge)
         self.add_item(self.obj_r)
  
-        self.obj_r2 = ui.Button(ui.col_rect(3,1, 3,2), 'vkey')
+        self.obj_r2 = ui.Button(ui.col_rect(3, 1, 3, 2), 'vkey')
         self.obj_r2.on_clicked.connect(self.hoge2)
         self.add_item(self.obj_r2)
          
