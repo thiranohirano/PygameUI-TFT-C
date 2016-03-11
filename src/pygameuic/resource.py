@@ -30,7 +30,11 @@ def get_font(size, use_bold=False):
             font_cache[key] = font
     return font
 
-
+def get_font_path(filename):
+    path = 'resources/fonts/%s.ttf' % filename
+    path = pkg_resources.resource_filename(package_name, path)
+    
+    return path
 # TODO update this to support multiple search paths
 
 

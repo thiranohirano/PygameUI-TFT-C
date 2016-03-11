@@ -42,7 +42,7 @@ class Label(object_rectangle.ObjectRectangle):
     
     @text.setter
     def text(self, text):
-        self._text = text
+        self._text = unicode(text, "utf-8")
         self.dirty = True
     
     def render(self):
