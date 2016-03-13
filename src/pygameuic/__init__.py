@@ -14,6 +14,7 @@ import theme  # @Reimport @UnresolvedImport
 
 Rect = pygame.Rect
 window_surface = None
+ui_quit = False
 
 class SceneManager(object):
     def __init__(self):
@@ -37,6 +38,10 @@ def init(name=' ', window_size=(480, 320)):
     pygame.display.set_caption(name)
     window.rect = pygame.Rect((0, 0), window_size)
     theme.init()
+    
+def quit():
+    global ui_quit
+    ui_quit = True
 
 def append_scene(_scene):
     global scene_manager
@@ -60,4 +65,7 @@ def run():
         clock.tick(20)
         scene.current.run()
         scene.current.displayUpdate()
-                        
+        if ui_quit:
+            pygame.quit()
+            import sys
+            sys.exit()

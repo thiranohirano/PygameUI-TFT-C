@@ -89,7 +89,7 @@ def init_default_theme():
                     value=None)
     default_theme.set(class_name=LABEL_CLASS,
                     key=FONT_KEY,
-                    value=pygame.font.SysFont('Courier New', 24))
+                    value=pygame.font.SysFont('Courier New', 22))
     
     default_theme.set(class_name=BUTTON_CLASS,
                       key=BACKGROUND_COLOR_KEY,
@@ -111,7 +111,7 @@ def init_default_theme():
                     value=dark_gray_color)
     default_theme.set(class_name=BUTTON_CLASS,
                     key=FONT_KEY,
-                    value=pygame.font.SysFont('Courier New', 24, bold=True))
+                    value=pygame.font.SysFont('Courier New', 20, bold=True))
     
     default_theme.set(class_name=STRING_LIST_VIEW_CLASS,
                       key=BACKGROUND_COLOR_KEY,
@@ -128,7 +128,7 @@ def init_default_theme():
     
     default_theme.set(class_name=STRING_LIST_ITEM_CLASS,
                       key=FONT_KEY,
-                      value=pygame.font.SysFont('Courier New', 24, bold=True))
+                      value=pygame.font.SysFont('Courier New', 20, bold=True))
 
 def use_theme(theme):
     """Make the given theme current.

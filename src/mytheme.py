@@ -26,3 +26,6 @@ def set_theme():
     theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
                       key=SELECT_BACKGROUND_COLOR_KEY,
                       value=mycolors.peter_river)
+#     theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
+#                       key=FONT_KEY,
+#                       value=pygame.font.SysFont('Courier New', 16, bold=True))

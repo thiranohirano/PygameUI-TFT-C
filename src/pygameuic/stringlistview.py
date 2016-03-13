@@ -6,7 +6,7 @@ Created on 2016/03/10
 import pygame
 import object_rectangle  # @UnresolvedImport
 import callback  # @UnresolvedImport
-import label
+import label  # @UnresolvedImport
 from pygame.rect import Rect
 from pygameuic import window
 
@@ -20,11 +20,21 @@ class StringListView(object_rectangle.ObjectRectangle):
         '''
         object_rectangle.ObjectRectangle.__init__(self, rect)
         self.items = []
+        self._items_font = None
         self.string_items = items
         self.selected_index = None
         self.on_selected = callback.Signal()
         self.items_surface = pygame.Surface((self.rect.w - self.border_widths * 2, self.rect.h - self.border_widths * 2)).convert()
         
+    @property
+    def items_font(self):
+        return self._items_font
+        
+    @items_font.setter
+    def items_font(self, new_font):
+        self._items_font = new_font
+        self.string_items = self._string_items
+    
     @property
     def string_items(self):
         return self._string_items
@@ -36,9 +46,11 @@ class StringListView(object_rectangle.ObjectRectangle):
         self._string_items = new_items
         x = 0
         y = 0
-        w, h = self.rect.w, window.rect.h // 8
+        w, h = self.rect.w, (window.rect.h - 10 - self.border_widths * 2) // 8 - 5
         for item in self._string_items:
             string_list_item = StringListItem(Rect(x, y, w, h), item)
+            if self._items_font <> None:
+                string_list_item.font = self._items_font
             self.add_item(string_list_item)
             y += h
         self.dirty = True
