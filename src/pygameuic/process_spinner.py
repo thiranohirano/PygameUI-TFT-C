@@ -12,7 +12,7 @@ from pygame.constants import RLEACCEL, SRCALPHA
 import resource  # @UnresolvedImport
 
 
-class ProccessSpinner():
+class ProcessSpinner():
     '''
     classdocs
     '''

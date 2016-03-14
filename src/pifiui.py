@@ -7,6 +7,7 @@ import pygame
 import pygameuic as ui
 import mycolors
 import pifi
+import time
 
 class PifiUI(ui.Scene):
     '''
@@ -46,9 +47,9 @@ class PifiUI(ui.Scene):
         ui.use_scene(0)
         
     def scan(self, btn):
-        self.show_proccess_spinner(self.scan_proccess, "Scanning for WiFi networks...")
+        self.show_process_spinner(self.scan_process, "Scanning for WiFi networks...")
         
-    def scan_proccess(self):
+    def scan_process(self):
         self.pifi.getWifiAPs()
         aps_list = []
         for ap in self.pifi.aps:
@@ -62,3 +63,23 @@ class PifiUI(ui.Scene):
         
     def ap_selected(self, slv, item, index):
         print str(index)
+        self.pifi.setAPFromIndex(index)
+        if(self.pifi.selected_ap_encrypted):
+            input_pwd = self.show_virtual_keyboard()
+            if input_pwd != '':
+                self.pifi.selected_ap_password = input_pwd
+            else: return
+            
+        self.show_process_spinner(self.generate_process, "Generating Config File...")
+        if(self.pifi.isConnected()):
+            self.show_process_message("Success! IP: %s" % self.pifi.ip, 2)
+        else:
+            self.show_process_message("Failed! Check WiFi password", 2)
+
+    def generate_process(self):
+        self.pifi.generateEtcInterfaces()
+        self.pifi.generateWPASupplicant()
+        self.pifi.reconnect()
+        
+    def message_process(self):
+        time.sleep(2)

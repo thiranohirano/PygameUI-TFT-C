@@ -43,7 +43,7 @@ class StartScene(ui.Scene):
         self.label1 = ui.Label(ui.Rect(10, 230, 100, 30), 'hoge')
 #         self.add_child(self.label1
 
-#         self.listview1 = ui.StringListView(ui.col_rect(0, 5, 3,3),["hoge", "hoge2", "hoge3"])
+#         self.listview1 = ui.StringListView(ui.col_rect(0, 4, 3,3),["hoge", "hoge2", "hoge3", "hoge4"])
 # #         self.listview1.items_font = pygame.font.SysFont('Courier New', 12, bold=True)
 #         self.add_child(self.listview1)
 
@@ -56,7 +56,7 @@ class StartScene(ui.Scene):
         self.add_child(self.shutdown_btn)
         
     def hoge(self, obj):
-        self.show_proccess_spinner(self.search_proccess, 'Scanning for WiFi networks...')
+        self.show_process_spinner(self.search_process, 'Scanning for WiFi networks...')
         
     def hoge2(self, obj):
         text = self.show_virtual_keyboard()
@@ -70,13 +70,23 @@ class StartScene(ui.Scene):
         ui.use_scene(1)
         
     def reboot_button_click(self, btn):
+#         self.add_fullscreen_label("Reboot...")
+        self.show_process_message("Reboot...",2)
         ui.quit()
         
     def shutdown_button_click(self, btn):
-        threading.Timer(1, self.shutdown_proccess).start()
+        self.show_process_message("Shutdown...",2)
+        threading.Timer(1, self.shutdown_process).start()
+#         self.add_fullscreen_label("Shutdown...")
         ui.quit()
+        
+    def add_fullscreen_label(self, text):
+        label = ui.Label(ui.col_rect(0, 0, 12, 8), text)
+        label.font = pygame.font.SysFont('Courier New', 28, bold=True)
+        self.add_child(label)
+        return label
     
-    def shutdown_proccess(self):
+    def shutdown_process(self):
         self.shutdown()
         
     # Get Your External IP Address
@@ -108,7 +118,7 @@ class StartScene(ui.Scene):
         output = process.communicate()[0]
         return output
         
-    def search_proccess(self):
+    def search_process(self):
         print 'hoge'
         time.sleep(3)
         print 'hoge'

@@ -2,10 +2,10 @@ import pygame
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEBUTTONUP
 
 import window  # @UnresolvedImport
-from proccess_spinner import ProccessSpinner  # @UnresolvedImport
+from process_spinner import ProcessSpinner  # @UnresolvedImport
 from virtualKeyboard import VirtualKeyboard  # @UnresolvedImport
 from pygameuic.colors import black_color
-
+import time
 
 stack = []
 current = None
@@ -65,13 +65,16 @@ class Scene(object):
     def event_mouseup(self, pos):
         pass
     
-    def show_proccess_spinner(self, slot, title=''):
-        ps = ProccessSpinner(self.window_surface)
+    def show_process_spinner(self, slot, title=''):
+        ps = ProcessSpinner(self.window_surface)
         ps.run(slot, title)
         
     def show_virtual_keyboard(self, text=''):
         vk = VirtualKeyboard(self.window_surface)
         return vk.run(text)
+    
+    def show_process_message(self, title='', sleep_time=1):
+        self.show_process_spinner(lambda:time.sleep(sleep_time), title)
         
     def add_child(self, item):
         assert item is not None
