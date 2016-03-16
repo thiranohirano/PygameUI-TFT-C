@@ -48,7 +48,7 @@ class StringListView(object_rectangle.ObjectRectangle):
         y = 0
         w= self.rect.w
 #         h = (window.rect.h - 10 - self.border_widths * 2) // 8 - 5
-        h = (self.rect.h - self.border_widths) /(self.rect.h // window.col_rect(0,0,1,1).h + 1)
+        h = (self.rect.h - self.border_widths) /(self.rect.h // (10 + window.col_rect(0,0,1,1).h) + 1)
         for item in self._string_items:
             string_list_item = StringListItem(Rect(x, y, w, h), item)
             if self._items_font <> None:
