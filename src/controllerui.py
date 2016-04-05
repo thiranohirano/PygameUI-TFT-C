@@ -19,31 +19,38 @@ class ControllerUI(ui.Scene):
         self.main_frame.border_widths = 9
         self.add_child(self.main_frame)
 
-        self.ip_label = ui.Label(ui.col_rect(0, 0, 12, 1), '')
+        btn = ui.Button(ui.col_rect(9, 7, 2, 1), 'Back')
+        btn.on_clicked.connect(self.back)
+        self.add_child(btn)
+
+        self.ip_label = ui.Label(ui.col_rect(0, 0, 9, 2), '')
         self.add_child(self.ip_label)
 
-        self.connect_btn = ui.Button(ui.col_rect(4, 1, 4, 1), 'Connect')
+        self.connect_btn = ui.Button(ui.col_rect(9, 0, 3, 1), 'Connect')
         self.connect_btn.on_clicked.connect(self.connect_tcp)
         self.add_child(self.connect_btn)
 
-        self.close_btn = ui.Button(ui.col_rect(4, 1, 4, 1), 'Close')
+        self.close_btn = ui.Button(ui.col_rect(9, 1, 3, 1), 'Close')
         self.close_btn.on_clicked.connect(self.close_tcp)
         #self.add_child(self.close_btn)
 
-        self.advance_btn = ui.Button(ui.col_rect(4, 2, 4, 2), 'Advance')
-        self.advance_btn.on_clicked.connect(self.send_advance)
+        self.forward_btn = ui.Button(ui.col_rect(4, 2, 4, 2), 'FW')
+        self.forward_btn.on_clicked.connect(self.send_forward)
 
-        self.left_btn = ui.Button(ui.col_rect(0, 4, 4, 2), 'Left')
+        self.left_btn = ui.Button(ui.col_rect(0, 4, 4, 2), 'LT')
         self.left_btn.on_clicked.connect(self.send_left)
 
         self.brake_btn = ui.Button(ui.col_rect(4, 4, 4, 2), 'Brake')
         self.brake_btn.on_clicked.connect(self.send_brake)
 
-        self.right_btn = ui.Button(ui.col_rect(8, 4, 4, 2), 'Right')
+        self.right_btn = ui.Button(ui.col_rect(8, 4, 4, 2), 'RT')
         self.right_btn.on_clicked.connect(self.send_right)
 
-        self.back_btn = ui.Button(ui.col_rect(4, 6, 4, 2), 'Back')
-        self.back_btn.on_clicked.connect(self.send_back)
+        self.back_btn = ui.Button(ui.col_rect(4, 6, 4, 2), 'BW')
+        self.back_btn.on_clicked.connect(self.send_backward)
+
+    def back(self, btn):
+        ui.use_scene(0)
 
     def connect_tcp(self, btn):
         try:
@@ -73,11 +80,11 @@ class ControllerUI(ui.Scene):
         self.ip_label.text = ''
         self.show_connect_close(False)
 
-    def send_advance(self, btn):
-        self.tcpCliSock.send("Advance")
+    def send_forward(self, btn):
+        self.tcpCliSock.send("Forward")
 
-    def send_back(self, btn):
-        self.tcpCliSock.send("Back")
+    def send_backward(self, btn):
+        self.tcpCliSock.send("Backward")
 
     def send_left(self, btn):
         self.tcpCliSock.send("Left")
@@ -92,7 +99,7 @@ class ControllerUI(ui.Scene):
         if flg:
             self.rm_child(self.connect_btn)
             self.add_child(self.close_btn)
-            self.add_child(self.advance_btn)
+            self.add_child(self.forward_btn)
             self.add_child(self.left_btn)
             self.add_child(self.brake_btn)
             self.add_child(self.right_btn)
@@ -100,7 +107,7 @@ class ControllerUI(ui.Scene):
         else:
             self.add_child(self.connect_btn)
             self.rm_child(self.close_btn)
-            self.rm_child(self.advance_btn)
+            self.rm_child(self.forward_btn)
             self.rm_child(self.left_btn)
             self.rm_child(self.brake_btn)
             self.rm_child(self.right_btn)
