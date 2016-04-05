@@ -64,14 +64,14 @@ class PifiUI(ui.Scene):
     def ap_selected(self, slv, item, index):
         print str(index)
         self.pifi.setAPFromIndex(index)
-        if(self.pifi.selected_ap_encrypted):
+        if self.pifi.selected_ap_encrypted:
             input_pwd = self.show_virtual_keyboard()
             if input_pwd != '':
                 self.pifi.selected_ap_password = input_pwd
             else: return
             
         self.show_process_spinner(self.generate_process, "Generating Config File...")
-        if(self.pifi.isConnected()):
+        if self.pifi.isConnected():
             self.show_process_message("Success! IP: %s" % self.pifi.ip, 2)
         else:
             self.show_process_message("Failed! Check WiFi password", 2)
@@ -80,6 +80,3 @@ class PifiUI(ui.Scene):
         self.pifi.generateEtcInterfaces()
         self.pifi.generateWPASupplicant()
         self.pifi.reconnect()
-        
-    def message_process(self):
-        time.sleep(2)

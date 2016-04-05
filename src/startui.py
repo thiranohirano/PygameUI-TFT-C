@@ -33,12 +33,12 @@ class StartScene(ui.Scene):
         self.obj_r2.on_clicked.connect(self.hoge2)
         self.add_child(self.obj_r2)
 
-        self.obj_r3 = ui.Button(ui.col_rect(6, 1, 3, 2), 'test')
-        self.obj_r3.on_clicked.connect(self.hoge3)
+        self.obj_r3 = ui.Button(ui.col_rect(6, 1, 3, 2), 'Control')
+        self.obj_r3.on_clicked.connect(self.controller_button)
         self.add_child(self.obj_r3)
 
-        self.obj_r4 = ui.Button(ui.col_rect(9, 1, 3, 2), 'Button')
-        self.obj_r4.on_clicked.connect(self.hoge4)
+        self.obj_r4 = ui.Button(ui.col_rect(9, 1, 3, 2), 'WiFi')
+        self.obj_r4.on_clicked.connect(self.wifi_button)
         self.add_child(self.obj_r4)
 
         self.label1 = ui.Label(ui.Rect(10, 230, 100, 30), 'hoge')
@@ -63,11 +63,14 @@ class StartScene(ui.Scene):
         text = self.show_virtual_keyboard()
         print text
 
-    def hoge3(self, obj):
+    @staticmethod
+    def controller_button(obj):
         #         self.label1.text = 'hogehoge'
-        self.stringlistview1.string_items = ["hoge", "hoge2"]
+        #self.stringlistview1.string_items = ["hoge", "hoge2"]
+        ui.use_scene(2)
 
-    def hoge4(self, obj):
+    @staticmethod
+    def wifi_button(obj):
         ui.use_scene(1)
 
     def reboot_button_click(self, btn):

@@ -1,13 +1,14 @@
-'''
+"""
 Created on 2016/03/03
 
 @author: hirano
-'''
+"""
 import os
 import pygame
 import pygameuic as ui  # @UnresolvedImport
 import startui
 import pifiui
+import controllerui
 import mytheme
 
 # os.putenv('SDL_FBDEV', '/dev/fb1')
@@ -20,5 +21,6 @@ if __name__ == '__main__':
     mytheme.set_theme()
     ui.append_scene(startui.StartScene())
     ui.append_scene(pifiui.PifiUI())
+    ui.append_scene(controllerui.ControllerUI())
     ui.use_scene(0)
     ui.run()
