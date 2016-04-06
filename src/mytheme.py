@@ -4,6 +4,14 @@ import mycolors
 from pygameuic.colors import *  # @UnusedWildImport
 
 def set_theme():
+    myfontsize = int((window.rect.w / 12 + 0.5 - 2) / 2)
+    myfont = pygame.font.SysFont('Courier New', myfontsize)
+    myfont_bold = pygame.font.SysFont('Courier New', myfontsize, bold=True)
+
+    theme.current.set(class_name=LABEL_CLASS,
+                      key=FONT_KEY,
+                      value=myfont)
+
     theme.current.set(class_name=BUTTON_CLASS,
                       key=BACKGROUND_COLOR_KEY,
                       value=black_color)
@@ -16,7 +24,10 @@ def set_theme():
     theme.current.set(class_name=BUTTON_CLASS,
                       key=BORDER_COLOR_KEY,
                       value=mycolors.belize_hole)
-    
+    theme.current.set(class_name=BUTTON_CLASS,
+                      key=FONT_KEY,
+                      value=myfont_bold)
+
     theme.current.set(class_name=STRING_LIST_VIEW_CLASS,
                       key=BORDER_COLOR_KEY,
                       value=mycolors.belize_hole)
@@ -26,6 +37,6 @@ def set_theme():
     theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
                       key=SELECT_BACKGROUND_COLOR_KEY,
                       value=mycolors.peter_river)
-#     theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
-#                       key=FONT_KEY,
-#                       value=pygame.font.SysFont('Courier New', 16, bold=True))
+    theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
+                      key=FONT_KEY,
+                      value=myfont_bold)

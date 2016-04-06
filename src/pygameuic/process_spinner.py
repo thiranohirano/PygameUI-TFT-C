@@ -25,6 +25,9 @@ class ProcessSpinner():
         self.rect = self.screen.get_rect()
         self.w = self.rect.width
         self.h = self.rect.height
+
+        self.keyW = int(self.w / 12 + 0.5) - 2
+        self.keyFont = pygame.font.SysFont('Courier New', self.keyW / 2, bold=True)
         
         # make a copy of the screen
         self.screenCopy = screen.copy()
@@ -56,7 +59,7 @@ class ProcessSpinner():
             
     def _draw_title(self, screen):
         pygame.font.init()  # Just in case 
-        titleFont = pygame.font.SysFont('Courier New', 24, bold=True) 
+        titleFont = self.keyFont
         text = titleFont.render(self.title, 1, white_color)
         textpos = text.get_rect()
         blockoffx = (self.w / 2)

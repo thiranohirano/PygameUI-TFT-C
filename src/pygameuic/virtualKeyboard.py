@@ -78,7 +78,7 @@ class VirtualKeyboard():
 #        print 'keys x {} w {} keyW {} keyH {}'.format(self.x, self.w, self.keyW, self.keyH)
 
         pygame.font.init()  # Just in case 
-        self.keyFont = pygame.font.SysFont('Courier New', 20, bold=True)  # keyboard font
+        self.keyFont = pygame.font.SysFont('Courier New', self.keyW / 2, bold=True)  # keyboard font
 
         # set dimensions for text input box
 #        self.textW = self.w-(self.keyW+2) # leave room for escape key (?)
@@ -289,8 +289,8 @@ class VirtualKeyboard():
         self.keys.append(onekey)
         x += onekey.w + self.keyW / 3
 
-        xfont = pygame.font.SysFont('Courier', 22, bold=True)  # I like this X better #TODO???
-        onekey = VKey('X', self.x + self.textW + 1, self.y, self.keyW - 3, self.keyH, xfont)  # exit key TODO???
+        xfont = self.keyFont  # I like this X better
+        onekey = VKey('X', self.x + self.textW + 1, self.y, self.keyW - 3, self.keyH, xfont)  # exit key
         onekey.special = True
         onekey.escape = True
         self.keys.append(onekey)
