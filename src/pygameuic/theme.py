@@ -16,12 +16,15 @@ TEXT_COLOR_KEY = 'text_color'
 SELECT_TEXT_COLOR_KEY = 'select_text_color'
 PADDING_KEY = 'padding'
 FONT_KEY = 'font'
+TEXT_FONT_KEY = 'txtfont'
 
 OBJECT_RECTANGLE_CLASS = 'ObjectRectangle'
 LABEL_CLASS = 'Label'
 BUTTON_CLASS = 'Button'
 STRING_LIST_VIEW_CLASS = 'StringListView'
 STRING_LIST_ITEM_CLASS = 'StringListItem'
+PROCESS_SPINNER_CLASS = 'ProcessSpinner'
+VIRTUAL_KEYBOARD_CLASS = 'VirtualKeyboard'
 
 class Theme(object):
     '''

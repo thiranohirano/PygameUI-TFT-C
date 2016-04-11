@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 """
 Created on 2016/03/03
 
@@ -100,7 +101,7 @@ class StartScene(ui.Scene):
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
             s.connect(('<broadcast>', 0))
-            ip_msg = "IP:" + s.getsockname()[0]
+            ip_msg = u"IPアドレス:" + s.getsockname()[0]
         except Exception:
             pass
         return ip_msg

@@ -41,6 +41,7 @@ from string import maketrans
 import pygame, time
 from pygame.constants import MOUSEBUTTONDOWN, MOUSEBUTTONUP, MOUSEMOTION
 from pygame.rect import Rect
+import object_rectangle
 
 Uppercase = maketrans("abcdefghijklmnopqrstuvwxyz`1234567890-=[]\;\',./",
   'ABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+{}|:"<>?')
@@ -50,7 +51,7 @@ Uppercase = maketrans("abcdefghijklmnopqrstuvwxyz`1234567890-=[]\;\',./",
 
 # ----------------------------------------------------------------------------
 
-class VirtualKeyboard():
+class VirtualKeyboard(object_rectangle.ObjectRectangle):
     ''' Implement a basic full screen virtual keyboard for touchscreens '''
 
     def __init__(self, screen):
@@ -78,8 +79,11 @@ class VirtualKeyboard():
 #        print 'keys x {} w {} keyW {} keyH {}'.format(self.x, self.w, self.keyW, self.keyH)
 
         pygame.font.init()  # Just in case 
-        self.keyFont = pygame.font.SysFont('Courier New', self.keyW / 2, bold=True)  # keyboard font
+        self.font = pygame.font.SysFont('Courier New', self.keyW / 2, bold=True)  # keyboard font
+        fsize = int(self.rect.height / 12 + 0.5)  # font size proportional to screen height
+        self.txtfont = pygame.font.SysFont('Courier New', fsize, bold=True)
 
+        object_rectangle.ObjectRectangle.__init__(self, self.rect)
         # set dimensions for text input box
 #        self.textW = self.w-(self.keyW+2) # leave room for escape key (?)
         self.textW = (self.keyW + 2) * 11 + 2  # leave room for escape key 
@@ -99,7 +103,7 @@ class VirtualKeyboard():
         self.text = text
         # create an input text box
         # create a text input box with room for 2 lines of text. leave room for the escape key
-        self.input = TextInput(self.screen, self.text, self.x, self.y, self.textW, self.textH)
+        self.input = TextInput(self.screen, self.text, self.x, self.y, self.textW, self.textH, self.txtfont)
 
         counter = 0
         time.sleep(0.3)
@@ -229,7 +233,7 @@ class VirtualKeyboard():
 
         row = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=']
         for item in row:
-            onekey = VKey(item, x, y, self.keyW, self.keyH, self.keyFont)
+            onekey = VKey(item, x, y, self.keyW, self.keyH, self.font)
             self.keys.append(onekey)
             x += self.keyW + margin_x
 
@@ -238,7 +242,7 @@ class VirtualKeyboard():
 
         row = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']']
         for item in row:
-            onekey = VKey(item, x, y, self.keyW, self.keyH, self.keyFont)
+            onekey = VKey(item, x, y, self.keyW, self.keyH, self.font)
             self.keys.append(onekey)
             x += self.keyW + margin_x
 
@@ -247,7 +251,7 @@ class VirtualKeyboard():
 
         row = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`']
         for item in row:
-            onekey = VKey(item, x, y, self.keyW, self.keyH, self.keyFont)
+            onekey = VKey(item, x, y, self.keyW, self.keyH, self.font)
             self.keys.append(onekey)
             x += self.keyW + margin_x
 
@@ -256,7 +260,7 @@ class VirtualKeyboard():
 
         row = ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '\\']
         for item in row:
-            onekey = VKey(item, x, y, self.keyW, self.keyH, self.keyFont)
+            onekey = VKey(item, x, y, self.keyW, self.keyH, self.font)
             self.keys.append(onekey)
             x += self.keyW + margin_x
 
@@ -265,32 +269,32 @@ class VirtualKeyboard():
 
 #        print 'addkeys keyW {} keyH {}'.format(self.keyW, self.keyH)
 
-        onekey = VKey('Shift', x, y, int(self.keyW * 2.5), self.keyH, self.keyFont)
+        onekey = VKey('Shift', x, y, int(self.keyW * 2.5), self.keyH, self.font)
         onekey.special = True
         onekey.shiftkey = True
         self.keys.append(onekey)
         x += onekey.w + self.keyW / 6
 
-        onekey = VKey('Space', x, y, self.keyW * 5, self.keyH, self.keyFont)
+        onekey = VKey('Space', x, y, self.keyW * 5, self.keyH, self.font)
         onekey.special = True
         onekey.spacekey = True
         self.keys.append(onekey)
         x += onekey.w + self.keyW / 6
 
-        onekey = VKey('Enter', x, y, int(self.keyW * 2.5), self.keyH, self.keyFont)
+        onekey = VKey('Enter', x, y, int(self.keyW * 2.5), self.keyH, self.font)
         onekey.special = True
         onekey.enter = True
         self.keys.append(onekey)
         x += onekey.w + self.keyW / 3
 
-        onekey = VKey('<-', x, y, int(self.keyW * 1.2 + 0.5), self.keyH, self.keyFont)
+        onekey = VKey('<-', x, y, int(self.keyW * 1.2 + 0.5), self.keyH, self.font)
         onekey.special = True
         onekey.bskey = True
         self.keys.append(onekey)
         x += onekey.w + self.keyW / 3
 
-        xfont = self.keyFont  # I like this X better
-        onekey = VKey('X', self.x + self.textW + 1, self.y, self.keyW - 3, self.keyH, xfont)  # exit key
+        xfont = self.font  # I like this X better
+        onekey = VKey('X', self.x + self.textW + 1, self.y + 1, self.keyW - 3, self.keyH, xfont)  # exit key
         onekey.special = True
         onekey.escape = True
         self.keys.append(onekey)
@@ -311,7 +315,7 @@ class VirtualKeyboard():
 
 class TextInput():
     ''' Handles the text input box and manages the cursor '''
-    def __init__(self, screen, text, x, y, w, h):
+    def __init__(self, screen, text, x, y, w, h, txtfont):
         self.screen = screen
         self.text = text
         self.cursorpos = len(text)
@@ -327,8 +331,8 @@ class TextInput():
 
 #        self.font = pygame.font.Font(None, fontsize) # use this if you want more text in the line
         rect = screen.get_rect()
-        fsize = int(rect.height / 12 + 0.5)  # font size proportional to screen height
-        self.txtFont = pygame.font.SysFont('Courier New', fsize, bold=True)
+
+        self.txtFont = txtfont
         # attempt to figure out how many chars will fit on a line
         # this does not work with proportional fonts
         tX = self.txtFont.render("XXXXXXXXXX", 1, (255, 255, 255))  # 10 chars
@@ -337,7 +341,7 @@ class TextInput():
         self.lineH = rtX.height  # pixels per line (vertical)
 #        print 'txtinp: width={} rtX={} font={} lineChars={} lineH={}'.format(self.w,rtX,fsize, self.lineChars,self.lineH)
 
-        self.cursorlayer = pygame.Surface((2, 22))  # thin vertical line
+        self.cursorlayer = pygame.Surface((2, self.lineH))  # thin vertical line
         self.cursorlayer.fill((255, 255, 255))  # white vertical line
         self.cursorvis = True
 

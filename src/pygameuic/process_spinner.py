@@ -10,9 +10,9 @@ from pygameui.colors import white_color
 
 from pygame.constants import RLEACCEL, SRCALPHA
 import resource  # @UnresolvedImport
+import object_rectangle
 
-
-class ProcessSpinner():
+class ProcessSpinner(object_rectangle.ObjectRectangle):
     '''
     classdocs
     '''
@@ -27,8 +27,9 @@ class ProcessSpinner():
         self.h = self.rect.height
 
         self.keyW = int(self.w / 12 + 0.5) - 2
-        self.keyFont = pygame.font.SysFont('Courier New', self.keyW / 2, bold=True)
-        
+        self.font = pygame.font.SysFont('Courier New', self.keyW / 2, bold=True)
+
+        object_rectangle.ObjectRectangle.__init__(self, self.rect)
         # make a copy of the screen
         self.screenCopy = screen.copy()
         # create a background surface
@@ -39,7 +40,12 @@ class ProcessSpinner():
         self.screen.blit(self.background, (0, 0))
         
         self.image = resource.get_image("spinner_all")
-        
+
+    def stylise(self):
+        style = theme.current.get_dict(self)
+        for key, val in style.iteritems():
+            kvc.set_value_for_keypath(self, key, val)
+
     def run(self, slot, title=''):
         self.title = title
         t = threading.Thread(target=self._spinnering)
@@ -59,8 +65,8 @@ class ProcessSpinner():
             
     def _draw_title(self, screen):
         pygame.font.init()  # Just in case 
-        titleFont = self.keyFont
-        text = titleFont.render(self.title, 1, white_color)
+        titlefont = self.font
+        text = titlefont.render(self.title, 1, white_color)
         textpos = text.get_rect()
         blockoffx = (self.w / 2)
         blockoffy = (self.h / 2)

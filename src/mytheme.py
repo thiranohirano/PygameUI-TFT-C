@@ -5,9 +5,10 @@ from pygameuic.colors import *  # @UnusedWildImport
 
 def set_theme():
     myfontsize = int((window.rect.w / 12 + 0.5 - 2) / 2)
-    myfont = pygame.font.SysFont('Courier New', myfontsize)
-    myfont_bold = pygame.font.SysFont('Courier New', myfontsize, bold=True)
-
+    myfont = pygame.font.Font(resource.get_font_path("VL-PGothic-Regular"), myfontsize)#pygame.font.SysFont('Courier New', myfontsize)
+    myfont_bold = pygame.font.Font(resource.get_font_path("VL-PGothic-Regular"), myfontsize, bold=True)#pygame.font.SysFont('Courier New', myfontsize, bold=True)
+    fsize = int(window.rect.height / 12 + 0.5)
+    mytxtfont = pygame.font.Font(resource.get_font_path("VL-PGothic-Regular"), fsize)
     theme.current.set(class_name=LABEL_CLASS,
                       key=FONT_KEY,
                       value=myfont)
@@ -40,3 +41,12 @@ def set_theme():
     theme.current.set(class_name=STRING_LIST_ITEM_CLASS,
                       key=FONT_KEY,
                       value=myfont_bold)
+    theme.current.set(class_name=PROCESS_SPINNER_CLASS,
+                      key=FONT_KEY,
+                      value=myfont_bold)
+    theme.current.set(class_name=VIRTUAL_KEYBOARD_CLASS,
+                      key=FONT_KEY,
+                      value=myfont_bold)
+    # theme.current.set(class_name=VIRTUAL_KEYBOARD_CLASS,
+    #                   key=TEXT_FONT_KEY,
+    #                   value=mytxtfont)

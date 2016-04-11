@@ -23,7 +23,7 @@ class ControllerUI(ui.Scene):
         btn.on_clicked.connect(self.back)
         self.add_child(btn)
 
-        self.ip_label = ui.Label(ui.col_rect(0, 0, 9, 2), '')
+        self.ip_label = ui.Label(ui.col_rect(0, 0, 9, 2), '', halign=ui.LEFT)
         self.add_child(self.ip_label)
 
         self.connect_btn = ui.Button(ui.col_rect(9, 0, 3, 1), 'Connect')
